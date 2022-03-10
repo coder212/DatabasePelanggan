@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">DatabasePelanggan</string>
+    <string name="tambahdata">Tambah Data</string>
+    <string name="floating_button">floating button</string>
+    <string name="nama">Nama</string>
+    <string name="notelp">Nomor Telepon</string>
+    <string name="alamat">Alamat</string>
+    <string name="hinttelp">Masukkan Nomor Telepon</string>
+    <string name="inputnama">Masukan Nama</string>
+    <string name="inputalamat">Masukan Alamat</string>
+    <string name="tomboltambahkan">Tambahkan</string>
+    <string name="tmblbtl">Batal</string>
+    <string name="tmblupdate">Update</string>
+    <string name="edtemail">Masukan Email</string>
+    <string name="deskripsi">Masukan Keterangan</string>
+    <string name="edt">Ubah</string>
+    <string name="hps">Hapus</string>
+
+</resources>

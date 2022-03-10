@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="nama"
+            type="String" />
+        <variable
+            name="gambar"
+            type="android.graphics.drawable.Drawable" />
+        <variable
+            name="notelp"
+            type="String" />
+        <variable
+            name="mail"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@{gambar}"/>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@{nama}"
+                    android:textSize="18sp" />
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/notelpon"
+            android:layout_marginStart="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{notelp}"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/email"
+            android:layout_marginStart="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@{mail}"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/birulangit" />
+    </LinearLayout>
+</layout>
