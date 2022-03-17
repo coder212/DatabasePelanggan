@@ -24,14 +24,14 @@ class MainActivity : AppCompatActivity(), RecyclerViewClickListener {
         val ada = aksi!!.checkdbexist()
         if(ada){
             val datap = aksi!!.getalldata()
-            binding.textView.visibility = View.INVISIBLE
+            binding.textView.visibility = View.GONE
             binding.rv.layoutManager = LinearLayoutManager(this)
             val dataPelangganAdapter = DataPelangganAdapter(datap)
             dataPelangganAdapter.listener = this
             binding.rv.adapter = dataPelangganAdapter
             aksi!!.close()
         }else{
-            binding.rv.visibility = View.INVISIBLE
+            binding.rv.visibility = View.GONE
             binding.text = "database kosong"
             //var modelDataPelanggan =ModelDataPelanggan("Paijo", "jalan terus tanpa mundur", "083111211111222")
             //var arrayList = ArrayList<ModelDataPelanggan>()
