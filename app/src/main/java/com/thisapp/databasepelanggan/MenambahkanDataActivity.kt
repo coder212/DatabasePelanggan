@@ -57,24 +57,7 @@ class MenambahkanDataActivity : AppCompatActivity(), RecyclerViewClickListener{
         binding.floatingActionButton2.setOnClickListener {
             val ctact = getcontacts()
             //Snackbar.make( binding.root, "Nama: "+ctact[100].Name+" notelp: "+ctact[100].PhoneNumber+" mail: "+ctact[100].AlamatEmail+" photo: "+ctact[100].pProfile, Snackbar.LENGTH_LONG).show()
-            dialogBuilder = AlertDialog.Builder(binding.root.context)
-            tutup = dialogBuilder.create()
-            dialogBuilder.setTitle("Kontak")
-            bindingDialog = CustomdialogBinding.inflate(layoutInflater)
-            tutup.setView(bindingDialog.root)
-            if ((ctact != null) && ctact.isNotEmpty()){
-                bindingDialog.textView.visibility = View.GONE
-                bindingDialog.rv.layoutManager = LinearLayoutManager(this)
-                val dataPelangganAdapter = DataPelangganAdapter(ctact)
-                dataPelangganAdapter.listener = this
-                bindingDialog.rv.adapter = dataPelangganAdapter
-            }else{
-                bindingDialog.rv.visibility = View.GONE
-                bindingDialog.text = "Kamu tidak memiliki kontak"
-            }
-            tutup.setTitle("Kontak")
-            tutup.setCancelable(true)
-            tutup.show()
+            dialogwindowcontact(ctact)
 
         }
 
@@ -91,6 +74,27 @@ class MenambahkanDataActivity : AppCompatActivity(), RecyclerViewClickListener{
         }
         getcontactPermission.launch(android.Manifest.permission.READ_CONTACTS)
 
+    }
+
+    private fun dialogwindowcontact(ctact: ArrayList<ModelDataPelanggan>) {
+        dialogBuilder = AlertDialog.Builder(binding.root.context)
+        tutup = dialogBuilder.create()
+        dialogBuilder.setTitle("Kontak")
+        bindingDialog = CustomdialogBinding.inflate(layoutInflater)
+        tutup.setView(bindingDialog.root)
+        if ((ctact != null) && ctact.isNotEmpty()) {
+            bindingDialog.textView.visibility = View.GONE
+            bindingDialog.rv.layoutManager = LinearLayoutManager(this)
+            val dataPelangganAdapter = DataPelangganAdapter(ctact)
+            dataPelangganAdapter.listener = this
+            bindingDialog.rv.adapter = dataPelangganAdapter
+        } else {
+            bindingDialog.rv.visibility = View.GONE
+            bindingDialog.text = "Kamu tidak memiliki kontak"
+        }
+        tutup.setTitle("Kontak")
+        tutup.setCancelable(true)
+        tutup.show()
     }
 
     private fun getcontacts(): ArrayList<ModelDataPelanggan> {
