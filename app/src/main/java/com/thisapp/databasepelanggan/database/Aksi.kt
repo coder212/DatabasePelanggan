@@ -1,8 +1,10 @@
 package com.thisapp.databasepelanggan.database
 
+import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.provider.ContactsContract
 import android.util.Log
 import com.thisapp.databasepelanggan.model.ModelDataPelanggan
 import java.sql.SQLException
@@ -86,6 +88,16 @@ class Aksi(private var context: Context) {
                     COLUMN_EMAIL_ADDRESS))
                 modelDataPelanggan.keterangan = cursor.getString(cursor.getColumnIndexOrThrow(
                     COLUMN_KETERANGAN))
+                val resolver: ContentResolver = context.contentResolver
+                val cursorphoto = resolver.query(ContactsContract.Contacts.CONTENT_URI, null,
+                    ContactsContract.Contacts.DISPLAY_NAME+"=?",
+                    arrayOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME))), null)
+                if (cursorphoto!!.count > 0) {
+                    while (cursorphoto.moveToNext()){
+                        modelDataPelanggan.pProfile = cursorphoto.getString(cursorphoto.getColumnIndexOrThrow(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI))
+                    }
+                }
+                cursorphoto.close()
                 arrayList.add(modelDataPelanggan)
                 cursor.moveToNext()
             }while (!cursor.isAfterLast)

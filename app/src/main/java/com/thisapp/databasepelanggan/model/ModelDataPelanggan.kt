@@ -1,5 +1,7 @@
 package com.thisapp.databasepelanggan.model
 
+import android.graphics.Bitmap
+
 class ModelDataPelanggan {
 
     var IdDatabase = 0
@@ -8,6 +10,7 @@ class ModelDataPelanggan {
     var PhoneNumber: String?? = null
     var AlamatEmail: String? = null
     var keterangan : String? = null
+    var pProfile : String? = null
 
     constructor(){}
 

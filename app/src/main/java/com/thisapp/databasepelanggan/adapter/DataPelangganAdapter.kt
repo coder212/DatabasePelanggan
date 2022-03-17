@@ -3,11 +3,16 @@ package com.thisapp.databasepelanggan.adapter
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.ImageDecoder
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.graphics.scale
 import androidx.recyclerview.widget.RecyclerView
@@ -35,18 +40,29 @@ class DataPelangganAdapter( private val dList: List<ModelDataPelanggan>): Recycl
         with(holder){
             with(dList[position]){
                 binding.nama = this.Name
-                var inisial = if(this.Name!!.length<2){
-                    this.Name!![0].uppercase()
+                if(this.pProfile == null){
+                    var inisial = if(this.Name!!.length<2){
+                        this.Name!![0].uppercase()
+                    }else{
+                        ""+ this.Name!![0].uppercaseChar() +this.Name!![1].uppercaseChar()
+                    }
+                    binding.gambar = BitmapDrawable( ctx.resources,  drawTextImage(inisial))
                 }else{
-                    ""+ this.Name!![0].uppercaseChar() +this.Name!![1].uppercaseChar()
+                    val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        ImageDecoder.decodeBitmap(ImageDecoder.createSource(ctx.contentResolver, Uri.parse(this.pProfile!!)))
+                    } else {
+                        MediaStore.Images.Media.getBitmap(ctx.contentResolver, Uri.parse(this.pProfile!!))
+                    }
+                    binding.gambar = BitmapDrawable(ctx.resources, bitmap)
+
                 }
-                binding.gambar = BitmapDrawable( ctx.resources,  drawTextImage(inisial))
-                if(this.PhoneNumber!!.isNotEmpty()){
+
+                if(this.PhoneNumber!=null){
                     binding.notelp = this.PhoneNumber
                 }else{
                     binding.notelpon.visibility = View.GONE
                 }
-                if(this.AlamatEmail!!.isNotEmpty()){
+                if(this.AlamatEmail!=null){
                     binding.mail = this.AlamatEmail
                 }else{
                     binding.email.visibility = View.GONE
