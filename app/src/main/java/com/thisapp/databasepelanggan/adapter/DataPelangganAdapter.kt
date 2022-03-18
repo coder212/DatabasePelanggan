@@ -1,5 +1,6 @@
 package com.thisapp.databasepelanggan.adapter
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -8,6 +9,7 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
+import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +41,17 @@ class DataPelangganAdapter( private val dList: List<ModelDataPelanggan>): Recycl
        // TODO("Not yet implemented")
         with(holder){
             with(dList[position]){
+                val resolver : ContentResolver = ctx.contentResolver
+                val cursor = resolver.query(
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID+"=?",arrayOf(this.IdDatabase.toString()), null)
+                if(cursor!!.count>0){
+                    while (cursor.moveToNext()){
+                        this.AlamatEmail = cursor.getString(cursor.getColumnIndex(
+                            ContactsContract.CommonDataKinds.Email.ADDRESS))
+                    }
+                    cursor.close()
+                }
                 binding.nama = this.Name
                 if(this.pProfile == null){
                     var inisial = if(this.Name!!.length<2){

@@ -89,13 +89,14 @@ class Aksi(private var context: Context) {
                 modelDataPelanggan.keterangan = cursor.getString(cursor.getColumnIndexOrThrow(
                     COLUMN_KETERANGAN))
                 val resolver: ContentResolver = context.contentResolver
-                val cursorphoto = resolver.query(ContactsContract.Contacts.CONTENT_URI, null,
-                    ContactsContract.Contacts.DISPLAY_NAME+"=?",
-                    arrayOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME))), null)
+                val cursorphoto = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.NUMBER+"=?",
+                    arrayOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER))), null)
                 if (cursorphoto!!.count > 0) {
-                    while (cursorphoto.moveToNext()){
-                        modelDataPelanggan.pProfile = cursorphoto.getString(cursorphoto.getColumnIndexOrThrow(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI))
-                    }
+                    cursorphoto.moveToFirst()
+                    do{
+                        modelDataPelanggan.pProfile = cursorphoto.getString(cursorphoto.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI))
+                    }while (cursorphoto.moveToNext())
                 }
                 cursorphoto.close()
                 arrayList.add(modelDataPelanggan)
