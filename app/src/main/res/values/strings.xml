@@ -15,5 +15,18 @@
     <string name="deskripsi">Masukan Keterangan</string>
     <string name="edt">Ubah</string>
     <string name="hps">Hapus</string>
+    <string name="title_activity_aksi">aksiActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Database Pelanggan</string>
+    <string name="menu_gallery">Database Produk</string>
+    <string name="menu_slideshow">Catatan Order</string>
+    <string name="menu_calculator">Kalkulator</string>
+    <string name="navigation_calculator">navigate calculator</string>
 
 </resources>

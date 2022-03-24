@@ -55,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
             aksi.open()
             aksi.deleteData(idDb)
             aksi.close()
-            val intent = Intent(binding.root.context, MainActivity::class.java)
+            val intent = Intent(binding.root.context, aksiActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -71,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(binding.root.context, MainActivity::class.java)
+        val intent = Intent(binding.root.context, aksiActivity::class.java)
         startActivity(intent)
         finish()
     }

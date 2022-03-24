@@ -53,7 +53,7 @@ class MenambahkanDataActivity : AppCompatActivity(), RecyclerViewClickListener{
                 arrayList.add(modelDataPelanggan)
                 aksi.insertData(arrayList)
                 aksi.close()
-                var intent = Intent(binding.root.context, MainActivity::class.java)
+                var intent = Intent(binding.root.context, aksiActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
@@ -215,7 +215,7 @@ class MenambahkanDataActivity : AppCompatActivity(), RecyclerViewClickListener{
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(binding.root.context, MainActivity::class.java)
+        val intent = Intent(binding.root.context, aksiActivity::class.java)
         startActivity(intent)
         finish()
     }

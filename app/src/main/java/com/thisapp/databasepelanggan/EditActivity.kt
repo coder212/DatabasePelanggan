@@ -54,13 +54,13 @@ class EditActivity : AppCompatActivity() {
                 modelDataPelanggan.keterangan = keterangan
                 aksi.updateData(modelDataPelanggan)
                 aksi.close()
-                val intent = Intent(binding.root.context, MainActivity::class.java)
+                val intent = Intent(binding.root.context, aksiActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
         binding.batal.setOnClickListener {
-            val intent = Intent(binding.root.context, MainActivity::class.java)
+            val intent = Intent(binding.root.context, aksiActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -69,7 +69,7 @@ class EditActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         //
-        val intent = Intent(binding.root.context, MainActivity::class.java)
+        val intent = Intent(binding.root.context, aksiActivity::class.java)
         startActivity(intent)
         finish()
     }

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.provider.ContactsContract
 import android.util.Log
 import com.thisapp.databasepelanggan.model.ModelDataPelanggan
+import com.thisapp.databasepelanggan.model.ProductModel
 import java.sql.SQLException
 import kotlin.jvm.Throws
 
@@ -110,7 +111,6 @@ class Aksi(private var context: Context) {
     fun getdetailbyname(nama:String): ModelDataPelanggan{
         Log.d("logging","namamu "+nama)
         var modelDataPelanggan : ModelDataPelanggan? = null
-        val arrayList = ArrayList<ModelDataPelanggan>()
         val cursor = sqlitedatabase!!.rawQuery("SELECT * FROM "+ TABLE_NAME+" WHERE "+
             COLUMN_NAME+" Like'%"+nama.trim { it<=' ' }+"%'", null)
         Log.d("logging",cursor.count.toString())
@@ -151,6 +151,79 @@ class Aksi(private var context: Context) {
     fun deleteData(idDatabase: Int){
         sqlitedatabase!!.delete(TABLE_NAME, COLUMN_ID_DATABASE+"=' "+idDatabase+"'", null)
     }
+
+    fun insertProduct(arrayList: ArrayList<ProductModel>){
+        val sql = "INSERT INTO "+Config.TABLE_PRODUCT+"("+Config.COLUMN_PRODUCT_NAME+", "+
+                Config.COLUMN_PRODUCT_PRICE+") VALUES (?, ?)"
+        sqlitedatabase!!.beginTransaction()
+        val statement= sqlitedatabase!!.compileStatement(sql)
+        arrayList.forEach{ product ->
+            statement.bindString(1, product.productName)
+            statement.bindDouble(2, product.productPrice)
+            statement.execute()
+            statement.clearBindings()
+        }
+        sqlitedatabase!!.setTransactionSuccessful()
+        sqlitedatabase!!.endTransaction()
+    }
+
+    fun checktableproductexist(): Boolean{
+        var result = false
+        val cursor = sqlitedatabase!!.rawQuery("SELECT "+ Config.COLUMN_PRODUCT_NAME+" FROM "+ Config.TABLE_PRODUCT,null)
+        //cursor.moveToFirst()
+        if(cursor.count>0){
+            result = true
+        }
+        cursor.close()
+        return result
+    }
+
+    fun getAllProduct():ArrayList<ProductModel>{
+        var result : ArrayList<ProductModel> = ArrayList<ProductModel>()
+        var query = "SELECT * FROM "+Config.TABLE_PRODUCT
+        val cursor = sqlitedatabase!!.rawQuery(query, null)
+        if((cursor!=null) && (cursor.count>0)){
+            while(cursor.moveToNext()){
+                var modelProduct = ProductModel()
+                modelProduct.productId = cursor.getInt(cursor.getColumnIndexOrThrow(Config.COLUMN_ID_DATABASE))
+                modelProduct.productName = cursor.getString(cursor.getColumnIndexOrThrow(Config.COLUMN_PRODUCT_NAME))
+                modelProduct.productPrice = cursor.getDouble(cursor.getColumnIndexOrThrow(Config.COLUMN_PRODUCT_PRICE))
+                result.add(modelProduct)
+            }
+            cursor.close()
+        }
+        return result
+    }
+
+    fun getDetailProduct(productName:String): ProductModel{
+        lateinit var result : ProductModel
+        val query = "SELECT * FROM "+Config.TABLE_PRODUCT+" WHERE "+Config.COLUMN_PRODUCT_NAME+
+                " LIKE '%"+productName.trim{it<=' '}+"%'"
+        val cursor = sqlitedatabase!!.rawQuery(query, null)
+        if((cursor!=null) && (cursor.count > 0)){
+            while (cursor.moveToNext()){
+                result = ProductModel()
+                result.productId = cursor.getInt(cursor.getColumnIndexOrThrow(Config.COLUMN_ID_DATABASE))
+                result.productName = cursor.getString(cursor.getColumnIndexOrThrow(Config.COLUMN_PRODUCT_NAME))
+                result.productPrice = cursor.getDouble(cursor.getColumnIndexOrThrow(Config.COLUMN_PRODUCT_PRICE))
+            }
+            cursor.close()
+        }
+        return result
+    }
+    fun updateProduct(productModel: ProductModel){
+        var args = ContentValues()
+        args.put(Config.COLUMN_PRODUCT_NAME, productModel.productName)
+        args.put(Config.COLUMN_PRODUCT_PRICE, productModel.productPrice)
+        sqlitedatabase!!.update(Config.TABLE_PRODUCT, args, COLUMN_ID_DATABASE +
+        " '="+productModel.productId+"'", null)
+    }
+
+    fun deleteProduct(idProduct:Int){
+        sqlitedatabase!!.delete(Config.TABLE_PRODUCT, COLUMN_ID_DATABASE+
+        "'="+idProduct+"'", null)
+    }
+
 
 
 }
